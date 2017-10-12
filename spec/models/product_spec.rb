@@ -6,10 +6,6 @@ RSpec.describe Product, type: :model do
       @product = FactoryGirl.create(:product)
     end
 
-    after :each do
-      @product = FactoryGirl.create(:product)
-    end
-
     it "can be created" do
       expect(@product).to be_valid
     end
