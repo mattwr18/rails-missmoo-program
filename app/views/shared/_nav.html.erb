@@ -1,0 +1,17 @@
+<div class="logo">
+  <h1 class="fa fa-line-chart fa-3x">Small business manager</h1>
+</div>
+
+<% if current_user %>
+  <ul class="custom-nav nav nav-tabs">
+    <li class="<%= active?(root_path) %>">
+      <%= link_to "", root_path, class: "fa fa-home fa-2x" %>
+    </li>
+    <li class="<%= active?(products_path) %>">
+      <%= link_to "Products", products_path, id: "new_product_from_nav" %>
+    </li>
+    <li class="pull-right">
+      <%= link_to "Logout", destroy_user_session_path, method: :delete %>
+    </li>
+  </ul>
+<% end %>

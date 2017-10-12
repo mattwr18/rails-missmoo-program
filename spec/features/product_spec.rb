@@ -25,7 +25,6 @@ describe 'navigation' do
     end
 
     it 'has a list of products' do
-
       product1 = FactoryGirl.create(:product)
       product2 = FactoryGirl.create(:second_product)
       visit products_path
@@ -40,6 +39,81 @@ describe 'navigation' do
       visit products_path
 
       expect(page).to_not have_content(/This product shouldn't be seen/)
+    end
+  end
+
+  describe 'new' do
+    it 'has a link from the homepage' do
+      visit root_path
+      click_on("new_product_from_nav")
+      expect(page.status_code).to eq(200)
+    end
+  end
+
+  describe 'delete' do
+    it 'can be deleted' do
+      logout(:user)
+
+      delete_user = FactoryGirl.create(:user)
+      login_as(delete_user, :scope => :user)
+
+      product_to_delete = FactoryGirl.create(:product)
+
+      visit products_path
+
+      click_link("delete_product_#{product_to_delete.id}_from_index")
+      expect(page.status_code).to eq(200)
+    end
+  end
+
+  describe 'creation' do
+    before do
+      visit new_product_path
+    end
+
+    it 'has a form that can be reached' do
+      expect(page.status_code).to eq(200)
+    end
+
+    it 'allows a product to be created' do
+      fill_in 'Name', with: "Yam milk"
+      fill_in 'Amount', with: 1
+      fill_in 'Price', with: 4
+      fill_in 'Cost', with: 1
+
+      expect { click_on "Create Product" }.to change(Product, :count).by(1)
+    end
+
+    it 'will have a user associated with it' do
+      fill_in 'Name', with: "Vegan milk"
+      fill_in 'Amount', with: 1
+      fill_in 'Price', with: 4
+      fill_in 'Cost', with: 1
+
+      click_on("Create Product")
+
+      expect(User.last.products.last.name).to eq("Vegan milk")
+    end
+  end
+
+  describe 'edit' do
+    it 'can be edited' do
+      visit edit_product_path(product)
+
+      fill_in 'Name', with: "Vegan milk"
+      fill_in 'Amount', with: 5
+
+      click_on("Update Product")
+      expect(page).to have_content("updated")
+    end
+
+    it 'cannot be edited by a non authorized user' do
+      logout(:user)
+      non_authorized_user = FactoryGirl.create(:non_authorized_user)
+      login_as(non_authorized_user, :scope => :user)
+      visit edit_product_path(product)
+
+      expect(current_path).to eq(root_path)
     end
   end
 end

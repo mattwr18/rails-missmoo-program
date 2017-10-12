@@ -2,5 +2,6 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { registrations: 'registrations'}
   resources :products
 
-  root to: 'products#index'
+  root to: 'static#homepage'
+
 end
