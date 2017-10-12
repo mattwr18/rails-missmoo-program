@@ -16,9 +16,17 @@ describe 'navigation' do
       visit products_path
     end
 
-    it 'can be reached successfully' do
-      expect(page.status_code).to eq(200)
-    end
+    context 'can be reached' do
+      it 'successfully' do
+        expect(page.status_code).to eq(200)
+      end
+
+      it 'from the homepage' do
+        visit root_path
+        click_on("new_product_from_nav")
+        expect(page.status_code).to eq(200)
+     end
+   end
 
     it 'has a title of Products' do
       expect(page).to have_content(/Products/)
@@ -39,14 +47,6 @@ describe 'navigation' do
       visit products_path
 
       expect(page).to_not have_content(/This product shouldn't be seen/)
-    end
-  end
-
-  describe 'new' do
-    it 'has a link from the homepage' do
-      visit root_path
-      click_on("new_product_from_nav")
-      expect(page.status_code).to eq(200)
     end
   end
 

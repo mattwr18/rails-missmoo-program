@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<% if current_user %>
+  <p>You're signed in</p>
+<% else %>
+  <p>Please sign in</p>
+<% end %>
+
+<h1>Ingredients</h1>
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Amount</th>
+        <th>Amount type</th>
+        <th>Minimum</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @ingredients.each do |ingredient| %>
+        <tr>
+          <td><%= ingredient.name %></td>
+          <td><%= ingredient.amount %></td>
+          <td><%= ingredient.amount_type %></td>
+          <td><%= ingredient.min_amount %></td>
+          <td><%= link_to 'Show', ingredient %></td>
+          <td><%= link_to 'Edit', edit_ingredient_path(ingredient) %></td>
+          <td><%= link_to 'Destroy', ingredient, method: :delete, id: "delete_ingredient_#{ingredient.id}_from_index", data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<br>
+
+<%= link_to 'New ingredient', new_ingredient_path, class: "btn btn-lg btn-info" %>
