@@ -1,7 +1,7 @@
 class IngredientsController < ApplicationController
 before_action :set_ingredient, only: [:show, :edit, :update, :destroy]
   def index
-    @ingredients = Ingredient.all
+    @ingredients = Ingredient.ingredients_by(current_user)
   end
 
   def new

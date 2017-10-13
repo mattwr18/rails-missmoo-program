@@ -30,8 +30,8 @@ describe 'navigation' do
     end
 
     it 'has a list of Ingredients' do
-      ingredient1 = FactoryGirl.create(:ingredient)
-      ingredient2 = FactoryGirl.create(:second_ingredient)
+      ingredient1 = FactoryGirl.create(:ingredient, user_id: user.id)
+      ingredient2 = FactoryGirl.create(:second_ingredient, user_id: user.id)
 
       visit ingredients_path
       expect(page).to have_content(/Peanuts|Almonds/)
@@ -45,7 +45,7 @@ describe 'navigation' do
       delete_user = FactoryGirl.create(:user)
       login_as(delete_user, :scope => :user)
 
-      ingredient_to_delete = FactoryGirl.create(:ingredient)
+      ingredient_to_delete = FactoryGirl.create(:ingredient, user_id: delete_user.id)
 
       visit ingredients_path
 
