@@ -33,14 +33,14 @@ describe 'navigation' do
     end
 
     it 'has a list of products' do
-      product1 = FactoryGirl.create(:product)
-      product2 = FactoryGirl.create(:second_product)
-      visit products_path
+      product1 = FactoryGirl.create(:product, user_id: user.id)
+      product2 = FactoryGirl.create(:product, user_id: user.id)
 
+      visit products_path
       expect(page).to have_content(/Peanut|Almond/)
     end
 
-    xit 'only allows product creators to see their products' do
+    it 'only allows product creators to see their products' do
       other_user = User.create(email: "test2@test.com", password: "asdfasdf", password_confirmation: "asdfasdf", first_name: "Danaerys", last_name: "Targaryen", username: "TheDragonsMother")
       product_other_user = Product.create(name: "This product shouldn't be seen", amount: 2, price: 2, cost: 2, user_id: other_user.id)
 
@@ -57,10 +57,9 @@ describe 'navigation' do
       delete_user = FactoryGirl.create(:user)
       login_as(delete_user, :scope => :user)
 
-      product_to_delete = FactoryGirl.create(:product)
+      product_to_delete = FactoryGirl.create(:product, user_id: delete_user.id)
 
       visit products_path
-
       click_link("delete_product_#{product_to_delete.id}_from_index")
       expect(page.status_code).to eq(200)
     end
@@ -91,7 +90,6 @@ describe 'navigation' do
       fill_in 'Cost', with: 1
 
       click_on("Create Product")
-
       expect(User.last.products.last.name).to eq("Vegan milk")
     end
   end

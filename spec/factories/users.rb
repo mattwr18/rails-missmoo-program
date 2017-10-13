@@ -5,6 +5,7 @@ FactoryGirl.define do
   sequence :username do |n|
     "test#{n}"
   end
+
   factory :user do
     email { generate :email}
     password "asdfasdf"
