@@ -2,8 +2,9 @@ FactoryGirl.define do
   factory :ingredient do
     name "Peanuts"
     amount 1
-    amount_type "kg"
+    amount_type "kilos"
     min_amount 150
+    min_amount_type "grams"
     user
   end
 
@@ -12,6 +13,7 @@ FactoryGirl.define do
     amount 1
     amount_type "kg"
     min_amount 200
+    min_amount_type "grams"
     user
   end
 end

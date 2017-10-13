@@ -50,21 +50,6 @@ describe 'navigation' do
     end
   end
 
-  describe 'delete' do
-    it 'can be deleted' do
-      logout(:user)
-
-      delete_user = FactoryGirl.create(:user)
-      login_as(delete_user, :scope => :user)
-
-      product_to_delete = FactoryGirl.create(:product, user_id: delete_user.id)
-
-      visit products_path
-      click_link("delete_product_#{product_to_delete.id}_from_index")
-      expect(page.status_code).to eq(200)
-    end
-  end
-
   describe 'creation' do
     before do
       visit new_product_path
@@ -94,6 +79,21 @@ describe 'navigation' do
     end
   end
 
+  describe 'delete' do
+    it 'can be deleted' do
+      logout(:user)
+
+      delete_user = FactoryGirl.create(:user)
+      login_as(delete_user, :scope => :user)
+
+      product_to_delete = FactoryGirl.create(:product, user_id: delete_user.id)
+
+      visit products_path
+      click_link("delete_product_#{product_to_delete.id}_from_index")
+      expect(page.status_code).to eq(200)
+    end
+  end
+
   describe 'edit' do
     it 'can be edited' do
       visit edit_product_path(product)
@@ -102,7 +102,7 @@ describe 'navigation' do
       fill_in 'Amount', with: 5
 
       click_on("Update Product")
-      expect(page).to have_content("updated")
+      expect(page).to have_content("Vegan")
     end
 
     it 'cannot be edited by a non authorized user' do

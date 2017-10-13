@@ -31,6 +31,12 @@
     <%= form.text_field :min_amount, id: :ingredient_min_amount %>
   </div>
 
+  <div class="field">
+    <%= form.label :min_amount_type %>
+    <%= form.select :min_amount_type, ['grams', 'kilos'], {include_blank: ''}, id: :ingredient_min_amount_type %>
+  </div>
+
+
   <div class="actions">
     <%= form.submit %>
   </div>

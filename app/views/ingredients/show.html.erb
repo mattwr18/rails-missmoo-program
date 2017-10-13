@@ -7,17 +7,12 @@
 
 <p>
   <strong>Amount:</strong>
-  <%= @ingredient.amount %>
-</p>
-
-<p>
-  <strong>Amount type:</strong>
-  <%= @ingredient.amount_type %>
+  <%= @ingredient.amount %> <%= @ingredient.amount_type %>
 </p>
 
 <p>
   <strong>Minimum amount:</strong>
-  <%= @ingredient.min_amount %>
+  <%= @ingredient.min_amount %> <%= @ingredient.min_amount_type %>
 </p>
 
 <%= link_to 'Edit', edit_ingredient_path(@ingredient) %> |

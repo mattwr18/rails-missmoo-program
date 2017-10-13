@@ -2,7 +2,7 @@ class Ingredient < ApplicationRecord
 belongs_to :user
 has_many :products
 
-validates_presence_of :name, :amount, :amount_type, :min_amount, :user_id
+validates_presence_of :name, :amount, :amount_type, :min_amount, :min_amount_type, :user_id
 
 validates :amount, :min_amount, numericality: { greater_than: 0.0 }
 

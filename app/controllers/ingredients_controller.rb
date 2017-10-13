@@ -15,7 +15,6 @@ before_action :set_ingredient, only: [:show, :edit, :update, :destroy]
     @ingredient = Ingredient.new(ingredient_params)
     @ingredient.user_id = current_user.id
 
-
     respond_to do |format|
       if @ingredient.save
         format.html { redirect_to @ingredient, notice: 'Ingredient was successfully created.' }
@@ -27,7 +26,22 @@ before_action :set_ingredient, only: [:show, :edit, :update, :destroy]
     end
   end
 
+  def edit
+    authorize @ingredient
+  end
+
   def update
+    authorize @ingredient
+
+    respond_to do |format|
+      if @ingredient.update(ingredient_params)
+        format.html { redirect_to @ingredient, notice: 'Ingredient was successfully updated.' }
+        format.json { render :show, status: :ok, location: @ingredient }
+      else
+        format.html { render :edit }
+        format.json { render json: @ingredient.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def destroy
@@ -44,6 +58,6 @@ before_action :set_ingredient, only: [:show, :edit, :update, :destroy]
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def ingredient_params
-      params.require(:ingredient).permit(:name, :amount, :min_amount, :amount_type, :user_id)
+      params.require(:ingredient).permit(:name, :amount, :min_amount, :amount_type, :min_amount_type, :user_id)
     end
 end

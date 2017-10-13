@@ -3,8 +3,8 @@ require 'rails_helper'
 describe 'navigation' do
   let(:user) { FactoryGirl.create(:user) }
 
-  let(:product) do
-    Ingredient.create(name: "Peanut milk", amount: 1, cost: 1, price: 1, user_id: user.id)
+  let(:ingredient) do
+    Ingredient.create(name: "Peanuts", amount: 5, amount_type: "kilos", min_amount: 1, min_amount_type: "grams", user_id: user.id)
   end
 
   before do
@@ -38,6 +38,37 @@ describe 'navigation' do
     end
   end
 
+  describe 'creation' do
+    before do
+      visit new_ingredient_path
+    end
+
+    it 'has a form that can be reached' do
+      expect(page.status_code).to eq(200)
+    end
+
+    it 'allows an ingredient to be created' do
+      fill_in 'Name', with: "Yams"
+      fill_in 'Amount', with: 500
+      select("grams", from: "ingredient_amount_type")
+      fill_in 'Min amount', with: 500
+      select("grams", from: "ingredient_min_amount_type")
+
+      expect { click_on "Create Ingredient" }.to change(Ingredient, :count).by(1)
+    end
+
+    it 'will have a user associated with it' do
+      fill_in 'Name', with: "Yams"
+      fill_in 'Amount', with: 500
+      select("grams", from: "ingredient_amount_type")
+      fill_in 'Min amount', with: 500
+      select("grams", from: "ingredient_min_amount_type")
+
+      click_on("Create Ingredient")
+      expect(User.last.ingredients.last.name).to eq("Yams")
+    end
+  end
+
   describe 'delete' do
     it 'can be deleted' do
       logout(:user)
@@ -54,32 +85,15 @@ describe 'navigation' do
     end
   end
 
-  describe 'creation' do
-    before do
-      visit new_ingredient_path
-    end
+  describe 'edit' do
+    it 'can be edited' do
+      visit edit_ingredient_path(ingredient)
 
-    it 'has a form that can be reached' do
-      expect(page.status_code).to eq(200)
-    end
+      fill_in 'Name', with: "Linseeds"
+      fill_in 'Amount', with: 45
 
-    it 'allows an ingredient to be created' do
-      fill_in 'Name', with: "Yams"
-      fill_in 'Amount', with: 500
-      select("grams", from: "ingredient_amount_type")
-      fill_in 'Min amount', with: 500
-
-      expect { click_on "Create Ingredient" }.to change(Ingredient, :count).by(1)
-    end
-
-    it 'will have a user associated with it' do
-      fill_in 'Name', with: "Yams"
-      fill_in 'Amount', with: 500
-      select("grams", from: "ingredient_amount_type")
-      fill_in 'Min amount', with: 500
-
-      click_on("Create Ingredient")
-      expect(User.last.ingredients.last.name).to eq("Yams")
+      click_on("Update")
+      expect(page).to have_content("Linseeds")
     end
   end
 end
