@@ -1,11 +1,14 @@
 class IngredientsController < ApplicationController
-#before_action :set_ingredient, only: [:show, :edit, :update, :destroy]
+before_action :set_ingredient, only: [:show, :edit, :update, :destroy]
   def index
     @ingredients = Ingredient.all
   end
 
   def new
     @ingredient = Ingredient.new
+  end
+
+  def show
   end
 
   def create
@@ -15,7 +18,7 @@ class IngredientsController < ApplicationController
 
     respond_to do |format|
       if @ingredient.save
-        format.html { redirect_to @ingredient, notice: 'ingredient was successfully created.' }
+        format.html { redirect_to @ingredient, notice: 'Ingredient was successfully created.' }
         format.json { render :show, status: :created, location: @ingredient }
       else
         format.html { render :new }
@@ -24,11 +27,20 @@ class IngredientsController < ApplicationController
     end
   end
 
+  def update
+  end
+
+  def destroy
+    @ingredient.destroy
+
+    redirect_to ingredients_path, notice: "Your ingredient was deleted successfully"
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
-#    def set_ingredient
-#      @ingredient = ingredient.find(params[:id])
-#    end
+    def set_ingredient
+      @ingredient = Ingredient.find(params[:id])
+    end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def ingredient_params

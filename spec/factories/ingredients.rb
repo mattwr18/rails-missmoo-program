@@ -4,6 +4,7 @@ FactoryGirl.define do
     amount 1
     amount_type "kg"
     min_amount 150
+    user
   end
 
   factory :second_ingredient, class: "Ingredient" do
@@ -11,5 +12,6 @@ FactoryGirl.define do
     amount 1
     amount_type "kg"
     min_amount 200
+    user
   end
 end
