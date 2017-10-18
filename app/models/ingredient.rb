@@ -1,6 +1,7 @@
 class Ingredient < ApplicationRecord
 belongs_to :user
 has_many :products
+has_many :recipes
 
 validates_presence_of :name, :amount, :amount_type, :min_amount, :min_amount_type, :user_id
 

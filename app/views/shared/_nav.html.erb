@@ -8,10 +8,13 @@
       <%= link_to "", root_path, class: "fa fa-home fa-2x" %>
     </li>
     <li class="<%= active?(products_path) %>">
-      <%= link_to "Products", products_path, id: "new_product_from_nav" %>
+      <%= link_to "Products", products_path, id: "products_from_nav" %>
     </li>
     <li class="<%= active?(ingredients_path) %>">
-      <%= link_to "Ingredients", ingredients_path, id: "new_ingredient_from_nav" %>
+      <%= link_to "Ingredients", ingredients_path, id: "ingredients_from_nav" %>
+    </li>
+    <li class="<%= active?(recipes_path) %>">
+      <%= link_to "Recipes", recipes_path, id: "recipes_from_nav" %>
     </li>
     <li class="pull-right">
       <%= link_to "Logout", destroy_user_session_path, method: :delete %>

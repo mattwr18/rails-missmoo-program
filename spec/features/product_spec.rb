@@ -23,13 +23,13 @@ describe 'navigation' do
 
       it 'from the homepage' do
         visit root_path
-        click_on("new_product_from_nav")
+        click_on("products_from_nav")
         expect(page.status_code).to eq(200)
      end
    end
 
     it 'has a title of Products' do
-      expect(page).to have_content(/Products/)
+      expect(page).to have_css("h1", text: /Products/)
     end
 
     it 'has a list of products' do

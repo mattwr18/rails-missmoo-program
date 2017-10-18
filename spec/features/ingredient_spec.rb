@@ -19,14 +19,14 @@ describe 'navigation' do
 
     it 'from the homepage' do
       visit root_path
-      click_on("new_ingredient_from_nav")
+      click_on("ingredients_from_nav")
       expect(page.status_code).to eq(200)
     end
   end
 
   context 'when navigated to' do
     it 'has a title of Ingredients' do
-      expect(page).to have_content(/Ingredients/)
+      expect(page).to have_css("h1", text: /Ingredients/)
     end
 
     it 'has a list of Ingredients' do
