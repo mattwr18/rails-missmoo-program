@@ -1,14 +1,20 @@
 class RecipesController < ApplicationController
-before_action :set_recipe, only: [:show]
+before_action :set_recipe, only: [:show, :edit, :update, :destroy]
+before_action :authenticate_user!
+
   def index
-    @recipes = Recipe.all
+    @recipes = Recipe.recipes_by(current_user)
+  end
+
+  def show
   end
 
   def new
     @recipe = Recipe.new
   end
 
-  def show
+  def edit
+    authorize @recipe
   end
 
   def create
@@ -26,11 +32,33 @@ before_action :set_recipe, only: [:show]
     end
   end
 
+  def update
+    authorize @recipe
+
+    respond_to do |format|
+      if @recipe.update(recipe_params)
+        format.html { redirect_to @recipe, notice: 'Recipe was successfully updated.' }
+        format.json { render :show, status: :ok, location: @recipe }
+      else
+        format.html { render :edit }
+        format.json { render json: @recipe.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def destroy
+    @recipe.destroy
+    respond_to do |format|
+      format.html { redirect_to recipes_url, notice: 'Recipe was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
+
   private
     def set_recipe
       @recipe = Recipe.find(params[:id])
     end
-    
+
     def recipe_params
       params.require(:recipe).permit(:product_id, :ingredient_id, :user_id, :amount, :amount_type)
     end
