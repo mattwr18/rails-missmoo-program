@@ -4,7 +4,16 @@ describe 'navigation' do
   let(:user) { FactoryGirl.create(:user) }
 
   let(:product) do
-    Product.create(name: "Peanut milk", amount: 1, cost: 1, price: 1, user_id: user.id)
+    Product.create(name: "Peanut milk",
+                   product_price: 2,
+                   product_cost: 2,
+                   ingredients: "Peanuts",
+                   ingredients_amount_per_recipe: 150,
+                   amount_type: "grams",
+                   ingredients_cost_per_unit: 5,
+                   unit_type: "kilos",
+                   min_amount: 150,
+                   user_id: user.id)
   end
 
   before do
@@ -42,7 +51,16 @@ describe 'navigation' do
 
     it 'only allows product creators to see their products' do
       other_user = User.create(email: "test2@test.com", password: "asdfasdf", password_confirmation: "asdfasdf", first_name: "Danaerys", last_name: "Targaryen", username: "TheDragonsMother")
-      product_other_user = Product.create(name: "This product shouldn't be seen", amount: 2, price: 2, cost: 2, user_id: other_user.id)
+      product_other_user = Product.create(name: "This product shouldn't be seen",
+                                          product_price: 2,
+                                          product_cost: 2,
+                                          ingredients: "Peanuts",
+                                          ingredients_amount_per_recipe: 150,
+                                          amount_type: "grams",
+                                          ingredients_cost_per_unit: 5,
+                                          unit_type: "kilos",
+                                          min_amount: 150,
+                                          user_id: other_user.id)
 
       visit products_path
 
@@ -61,18 +79,28 @@ describe 'navigation' do
 
     it 'allows a product to be created' do
       fill_in 'Name', with: "Yam milk"
-      fill_in 'Amount', with: 1
-      fill_in 'Price', with: 4
-      fill_in 'Cost', with: 1
+      fill_in 'product_ingredient1', with: "Yams"
+      fill_in 'product_ingredient1_amount_per_recipe', with: 200
+      select 'grams', from: "product_ingredient1_amount_type"
+      fill_in 'product_ingredient1_cost_per_unit', with: 5
+      select 'kilos', from: "product_ingredient1_unit_type"
+      fill_in 'product_ingredient1_min_amount', with: 150
+      fill_in 'product_price', with: 4
+      fill_in 'product_cost', with: 1
 
       expect { click_on "Create Product" }.to change(Product, :count).by(1)
     end
 
     it 'will have a user associated with it' do
       fill_in 'Name', with: "Vegan milk"
-      fill_in 'Amount', with: 1
-      fill_in 'Price', with: 4
-      fill_in 'Cost', with: 1
+      fill_in 'product_ingredient1', with: "Vegan"
+      fill_in 'product_ingredient1_amount_per_recipe', with: 200
+      select 'grams', from: "product_ingredient1_amount_type"
+      fill_in 'product_ingredient1_cost_per_unit', with: 5
+      select 'kilos', from: "product_ingredient1_unit_type"
+      fill_in 'product_ingredient1_min_amount', with: 150
+      fill_in 'product_price', with: 4
+      fill_in 'product_cost', with: 1
 
       click_on("Create Product")
       expect(User.last.products.last.name).to eq("Vegan milk")
@@ -99,7 +127,7 @@ describe 'navigation' do
       visit edit_product_path(product)
 
       fill_in 'Name', with: "Vegan milk"
-      fill_in 'Amount', with: 5
+      fill_in 'product_ingredient1', with: "milk"
 
       click_on("Update Product")
       expect(page).to have_content("Vegan")

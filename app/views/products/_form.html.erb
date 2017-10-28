@@ -17,18 +17,43 @@
   </div>
 
   <div class="field">
-    <%= form.label :amount %>
-    <%= form.number_field :amount, id: :product_amount %>
+    <%= form.label :ingredients %>
+    <%= form.text_field :ingredients, id: :product_ingredient1 %>
   </div>
 
   <div class="field">
-    <%= form.label :price %>
-    <%= form.text_field :price, id: :product_price %>
+    <%= form.label :ingredients_amount_per_recipe %>
+    <%= form.text_field :ingredients_amount_per_recipe, id: :product_ingredient1_amount_per_recipe %>
   </div>
 
   <div class="field">
-    <%= form.label :cost %>
-    <%= form.text_field :cost, id: :product_cost %>
+    <%= form.label :amount_type %>
+    <%= form.select :amount_type, ['grams', 'kilos', 'tablespoons', 'teaspoons', 'liters', 'milliliters'], {include_blank: ''}, id: :product_ingredient1_amount_type %>
+  </div>
+
+  <div class="field">
+    <%= form.label :ingredients_cost_per_unit %>
+    <%= form.text_field :ingredients_cost_per_unit, id: :product_ingredient1_cost_per_unit %>
+  </div>
+
+  <div class="field">
+    <%= form.label :unit_type %>
+    <%= form.select :unit_type, ['kilos', 'liters', 'units'], {include_blank: ''}, id: :product_ingredient1_unit_type %>
+  </div>
+
+  <div class="field">
+    <%= form.label :min_amount %>
+    <%= form.text_field :min_amount, id: :product_ingredient1_min_amount %>
+  </div>
+
+  <div class="field">
+    <%= form.label :product_price %>
+    <%= form.text_field :product_price, id: :product_price %>
+  </div>
+
+  <div class="field">
+    <%= form.label :product_cost %>
+    <%= form.text_field :product_cost, id: :product_cost %>
   </div>
 
   <div class="actions">

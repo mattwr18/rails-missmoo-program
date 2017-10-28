@@ -38,7 +38,16 @@ describe 'navigation' do
 
   it 'only allows recipe creators to see their recipes' do
     other_user = User.create(email: "test2@test.com", password: "asdfasdf", password_confirmation: "asdfasdf", first_name: "Danaerys", last_name: "Targaryen", username: "TheDragonsMother")
-    product_other_user = Product.create(name: "This product shouldn't be seen", amount: 2, price: 2, cost: 2, user_id: other_user.id)
+    product_other_user = Product.create(name: "This product shouldn't be seen",
+                                        product_price: 2,
+                                        product_cost: 2,
+                                        ingredients: "Peanuts",
+                                        ingredients_amount_per_recipe: 150,
+                                        amount_type: "grams",
+                                        ingredients_cost_per_unit: 5,
+                                        unit_type: "kilos",
+                                        min_amount: 150,
+                                        user_id: other_user.id)
     ingredient_other_user = Ingredient.create(name: "Peanuts", amount: 1, amount_type: "kilos", min_amount: 150, min_amount_type: "grams", user_id: other_user.id)
     recipe_other_user = Recipe.create(product_id: product_other_user.id, ingredient_id: ingredient_other_user.id, amount: 2, amount_type: "grams", user_id: other_user.id)
 
