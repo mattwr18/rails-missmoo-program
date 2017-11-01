@@ -25,6 +25,12 @@ group :development, :test do
   gem 'selenium-webdriver'
   gem 'database_cleaner'
   gem 'factory_girl_rails', '~> 4.8'
+  gem 'pry'
+  gem 'pry-rails'
+  gem 'guard'
+  gem 'guard-livereload'
+  gem 'guard-rspec'
+  gem 'guard-bundler'
 end
 
 group :development do
@@ -39,3 +45,4 @@ gem 'devise', '~> 4.3'
 gem 'pundit', '~> 1.1'
 gem 'font-awesome-rails', '~> 4.7', '>= 4.7.0.2'
 gem 'bootstrap-sass', '~> 3.3.6'
+gem 'shoulda-matchers', group: :test

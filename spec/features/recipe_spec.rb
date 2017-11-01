@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 describe 'navigation' do
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { recipe.user }
 
-  let(:recipe) { FactoryGirl.create(:recipe, user_id: user.id) }
+  let(:recipe) { FactoryGirl.create(:recipe) }
 
   before do
     login_as(user, :scope => :user)
@@ -59,9 +59,6 @@ end
 
   describe 'creation' do
     before do
-      @product1 = FactoryGirl.create(:product)
-      ingredient1 = FactoryGirl.create(:ingredient)
-      recipe1 = FactoryGirl.create(:recipe, product_id: @product1.id, ingredient_id: ingredient1.id)
       visit new_recipe_path
     end
 
@@ -85,7 +82,7 @@ end
       select "grams", from: "recipes_amount_type"
 
       click_on("Create Recipe")
-      expect(User.last.recipes.last.product_id).to eq(@product1.id)
+      expect(Recipe.last.user_id).to eq(user.id)
     end
   end
 
