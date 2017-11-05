@@ -1,13 +1,16 @@
 class Product < ApplicationRecord
+  attr_accessor :ingredients_attributes
   belongs_to :user
-  has_many :ingredients_set, foreign_key: "ingredient_id", class_name: "Ingredient"
+  has_many :ingredients, inverse_of: :product
+  #has_and_belongs_to_many :ingredients
   has_many :recipes
+  accepts_nested_attributes_for :ingredients
 
   after_initialize :set_defaults
 
-  validates_presence_of :name, :user_id, :ingredients, :amount_type, :unit_type
+  validates_presence_of :name, :user_id
 
-  validates :product_price, :product_cost, :ingredients_amount_per_recipe, :ingredients_cost_per_unit, :min_amount, presence: true, numericality: { greater_than: 0.0 }
+  validates :price, :cost, presence: true, numericality: { greater_than: 0.0 }
 
   validates :amount, presence: true, numericality: { greater_than_or_equal_to: 0.0 }
 

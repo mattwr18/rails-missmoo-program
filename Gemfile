@@ -17,6 +17,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'redis', '~> 3.0'
 gem 'bcrypt', '~> 3.1.7'
 gem 'capistrano-rails', group: :development
+gem 'jquery-rails', '~> 4.3', '>= 4.3.1'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -46,3 +47,4 @@ gem 'pundit', '~> 1.1'
 gem 'font-awesome-rails', '~> 4.7', '>= 4.7.0.2'
 gem 'bootstrap-sass', '~> 3.3.6'
 gem 'shoulda-matchers', group: :test
+gem 'cocoon', '~> 1.2', '>= 1.2.11'

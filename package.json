@@ -1,5 +1,7 @@
 {
   "name": "rails-missmoo-program",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "jquery": "^3.2.1"
+  }
 }

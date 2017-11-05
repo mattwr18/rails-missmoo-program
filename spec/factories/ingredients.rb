@@ -1,5 +1,6 @@
 FactoryGirl.define do
   factory :ingredient do
+    product "Peanut Milk"
     name "Peanuts"
     amount 1
     amount_type "kilos"

@@ -15,6 +15,7 @@ class ProductsController < ApplicationController
   # GET /products/new
   def new
     @product = Product.new
+    @product.ingredients.build
   end
 
   # GET /products/1/edit
@@ -30,7 +31,9 @@ class ProductsController < ApplicationController
 
     respond_to do |format|
       if @product.save
-        ProductManager.new(current_user, @product).create_ingredients
+        #ProductManager.new(current_user, @product, @ingredient).create_ingredients
+        #ProductManager.new(current_user, @product, @ingredient).create_recipes
+
         format.html { redirect_to @product, notice: 'Product was successfully created.' }
         format.json { render :show, status: :created, location: @product }
       else
@@ -66,6 +69,15 @@ class ProductsController < ApplicationController
     end
   end
 
+  def add_fields
+
+    respond_to do |format|
+      format.html { redirect_to products_url, notice: 'Ingredient form was successfully added.' }
+      format.json { head :no_content }
+      format.js
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_product
@@ -74,6 +86,6 @@ class ProductsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def product_params
-      params.require(:product).permit(:name, :ingredients, :ingredients_amount_per_recipe, :amount_type, :ingredients_cost_per_unit, :unit_type, :min_amount, :product_price, :product_cost, :user_id, :amount)
+      params.require(:product).permit(:name, :price, :cost, :user_id, :amount, ingredients_attributes: Ingredient.attribute_names.map(&:to_sym))
     end
 end

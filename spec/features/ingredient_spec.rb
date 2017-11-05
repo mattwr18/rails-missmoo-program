@@ -2,9 +2,9 @@ require 'rails_helper'
 
 describe 'navigation' do
   let(:user) { FactoryGirl.create(:user) }
-
+  let(:product) { FactoryGirl.create(:product) }
   let(:ingredient) do
-    Ingredient.create(name: "Peanuts", amount: 5, amount_type: "kilos", min_amount: 1, min_amount_type: "grams", user_id: user.id)
+    Ingredient.create(name: "Peanuts", amount: 5, amount_type: "kilos", min_amount: 1, min_amount_type: "grams", user_id: user.id, product_id: product.id)
   end
 
   before do
@@ -30,8 +30,8 @@ describe 'navigation' do
     end
 
     it 'has a list of Ingredients' do
-      ingredient1 = FactoryGirl.create(:ingredient, user_id: user.id)
-      ingredient2 = FactoryGirl.create(:second_ingredient, user_id: user.id)
+      ingredient1 = FactoryGirl.create(:ingredient, user_id: user.id, product_id: product.id)
+      ingredient2 = FactoryGirl.create(:second_ingredient, user_id: user.id, product_id: product.id)
 
       visit ingredients_path
       expect(page).to have_content(/Peanuts|Almonds/)
@@ -48,6 +48,7 @@ describe 'navigation' do
     end
 
     it 'allows an ingredient to be created' do
+      select "Peanut Milk", from: "ingredient_product_id"
       fill_in 'Name', with: "Yams"
       fill_in 'Amount', with: 500
       select("grams", from: "ingredient_amount_type")
@@ -76,7 +77,7 @@ describe 'navigation' do
       delete_user = FactoryGirl.create(:user)
       login_as(delete_user, :scope => :user)
 
-      ingredient_to_delete = FactoryGirl.create(:ingredient, user_id: delete_user.id)
+      ingredient_to_delete = FactoryGirl.create(:ingredient, user_id: delete_user.id, product_id: product.id)
 
       visit ingredients_path
 

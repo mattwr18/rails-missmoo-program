@@ -58,6 +58,6 @@ before_action :set_ingredient, only: [:show, :edit, :update, :destroy]
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def ingredient_params
-      params.require(:ingredient).permit(:name, :amount, :min_amount, :amount_type, :min_amount_type, :user_id)
+      params.require(:ingredient).permit(:name, :amount, :min_amount, :amount_type, :min_amount_type, :user_id, :product_id)
     end
 end

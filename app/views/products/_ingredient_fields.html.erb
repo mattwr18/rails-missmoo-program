@@ -1,0 +1,32 @@
+<fieldset>
+  <div class="nested-fields">
+    <div class="field">
+      <%= f.label :name %>
+      <%= f.text_field :name, id: :ingredient_name %>
+    </div>
+
+    <div class="field">
+      <%= f.label :amount %>
+      <%= f.number_field :amount, id: :ingredient_amount %>
+    </div>
+
+    <div class="field">
+      <%= f.label :amount_type %>
+      <%= f.select :amount_type, ['grams', 'kilos'], {include_blank: ''}, id: :ingredient_amount_type %>
+    </div>
+
+    <div class="field">
+      <%= f.label :min_amount %>
+      <%= f.text_field :min_amount, id: :ingredient_min_amount %>
+    </div>
+
+    <div class="field">
+      <%= f.label :min_amount_type %>
+      <%= f.select :min_amount_type, ['grams', 'kilos'], {include_blank: ''}, id: :ingredient_min_amount_type %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+  </div>
+</fieldset>
